@@ -1,0 +1,100 @@
+.item{
+    flex:1 0 calc((100% - 10px) / 2 );
+    background-color: white;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    text-decoration: none;
+    color:black;
+    max-width: calc((100% - 10px) / 2 );
+  }
+  .item:hover{
+    color: black;
+  }
+  
+  
+  .img{
+    width: 35%;
+    aspect-ratio: 1 / 1;
+    margin-right: 10px;
+  }
+  .text{
+    width: calc(65% - 35px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .title{
+    font-weight: 500;
+    font-size: 1.8rem;
+    word-wrap: break-word;
+    white-space: pre-line;
+    --max-lines:3;
+
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: var(--max-lines);
+  }
+  .date{
+    font-weight: 500;
+    font-size: 1.2rem;
+    color: gray;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .side{
+    width:25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .price{
+    font-size: 2rem;
+    font-weight: 500;
+  }
+  .location{
+    font-size:1.2rem;
+    font-weight: 500;
+    color: gray;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .skelton-container{
+    flex:1 0 calc((100% - 10px) / 2 );
+  }
+  .skelton-cir{
+    width:100px !important;
+    height: 100px !important;
+  }
+  .skelton-rou{
+    width:100% !important;
+    height:100px !important;
+  }
+
+  @media screen and (max-width:750px) {
+  
+    .item{
+      flex:1 0 100%;
+      max-width: unset;
+      background-color: white;
+      padding: 10px;
+      box-sizing: border-box;
+      display: flex;
+    }
+    .skelton-container{
+      flex:1 0 100%;
+    }
+    .skelton-cir{
+      width:50px !important;
+      height: 50px !important;
+    }
+    .skelton-rou{
+      width: 100% !important;
+      height: 50px !important;
+    }
+  }

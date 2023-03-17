@@ -1,0 +1,223 @@
+
+.header{
+    font-size: 2rem;
+    font-weight: 500;
+    margin-bottom: 16px;
+    margin-left: 5px;
+}
+.listings{
+    margin-top: 50px;
+    padding: 0 35px;
+    position: relative;
+}
+.wrapper{
+    width: 100%;
+    overflow:hidden;
+}
+
+.item-container{
+    display: flex;
+    padding-bottom: 10px;
+    transition: transform .4s ease;
+}
+.arrow-left{
+    position: absolute;
+    top:50%;
+    left:20px;
+    width: 50px;
+    height: 50px;
+    color: white;
+    background-color: rgb(193, 197, 193);
+    border-radius: 50%;
+    transform: translate(0,-50%);
+    text-align: center;
+    line-height: 50px;
+    opacity: .7;
+}
+.arrow-right{
+    position: absolute;
+    top:50%;
+    right:20px;
+    width: 50px;
+    height: 50px;
+    background-color: rgb(193, 197, 193);
+    border-radius: 50%;
+    transform: translate(0,-50%);
+    text-align: center;
+    line-height: 50px;
+    opacity: .7;
+    color: white;
+}
+.item-container::-webkit-scrollbar{
+    width: 5px;
+    height: 5px;
+    color: black;
+    background-color: transparent;
+}
+.item-container::-webkit-scrollbar-thumb{
+    background-color: rgb(185, 183, 183);
+    border-radius: 4px;
+}
+.categories{
+    margin-top: 50px;
+    padding: 0 35px;
+}
+.category-list{
+    width: 100%;
+    padding: 0 10%;
+    list-style: none;
+}
+.category-item{
+    margin-bottom: 20px;
+}
+.category-item2{
+    margin-bottom: 20px;
+}
+.category{
+    display: inline-block;
+    padding: 0 10px;
+    width: 50%;
+    background-color:white;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+.link{
+    text-decoration: none;
+    color:black;
+}
+.link:hover{
+    color: black;
+}
+.category-img{
+    width: 100%;
+    height: 200px;
+    background-color: rgb(244, 240, 240);
+    margin-bottom: 5px;
+    background-size: cover;
+    border-radius: 4px;
+}
+
+.category-item .category:nth-child(1) .category-img{
+    background-image: url("../../img/room2.jpg");
+    background-position: center;
+
+}
+.category-item .category:nth-child(2) .category-img{
+    background-image: url("../../img/jobs.jpg");
+    background-position: center;
+}
+.category-item2 .category:nth-child(1) .category-img{
+    background-image: url("../../img/onlineshopping.jpg");
+    background-position: center;
+}
+.category-item2 .category:nth-child(2) .category-img{
+    background-image: url("../../img/calendar.jpg");
+    background-position: center;
+}
+.category-item3 .category:nth-child(1) .category-img{
+    background-image: url("../../img/cautious.jpg");
+    background-position: center;
+}
+.category-item3 .category:nth-child(2) .category-img{
+    background-image: url("../../img/mg.jpg");
+    background-position: center;
+}
+.category:hover{
+    color: black;
+}
+.category-name{
+    text-align: center;
+    font-weight: 500;
+    font-size: 1.6rem;
+}
+.featuredItems{
+    margin-top: 50px;
+    padding: 0 35px;
+}
+.flex-container{
+    display: flex;
+    flex-wrap: wrap;
+    padding:0 10%;
+}
+
+
+
+
+
+
+@media  screen and (max-width:820px){
+.listings{
+        margin-top: 50px;
+        padding: 0 5px;
+        position: relative;
+}
+.wrapper{
+    overflow: unset;
+}
+.arrow-left{
+    display: none;
+}
+.arrow-right{
+    display: none;
+}
+.item-container{
+    overflow-x: auto;
+}
+.item-container::-webkit-scrollbar{
+    display: none;
+}
+.categories{
+    margin-top: 50px;
+    padding: 0 5px;
+}
+
+.featuredItems{
+    margin-top: 50px;
+    padding: 0 5px;
+}
+}
+
+
+
+
+@media  screen and (max-width:720px){
+    
+    .category-img{
+        width: 100%;
+        height: 150px;
+        background-color: rgb(244, 240, 240);
+        margin-bottom: 5px;
+        background-size: cover;
+        border-radius: 4px;
+    }
+
+}
+
+@media  screen and (max-width:500px){
+    .category{
+        display: inline-block;
+        padding: 0 5px;
+        width: 50%;
+        background-color:white;
+        cursor: pointer;
+        box-sizing: border-box;
+    }
+    .category-list{
+        width: 100%;
+        padding: 0 0%;
+        list-style: none;
+    }
+    .category-img{
+        width: 100%;
+        height: 120px;
+        background-color: rgb(244, 240, 240);
+        margin-bottom: 5px;
+        background-size: cover;
+        border-radius: 4px;
+    }
+    .flex-container{
+        display: flex;
+        flex-wrap: wrap;
+        padding:0 0;
+    }
+}

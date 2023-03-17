@@ -1,0 +1,40 @@
+.post{
+   background-color: #F0F2F5;
+   padding: 5% 20%;
+}
+
+.title{
+    font-size: 2.4rem;
+    font-weight: 500;
+    margin-bottom: 30px;
+}
+
+
+.btn{
+    width: 200px;
+    font-size:1.5rem;
+    font-weight: 500;
+    border: 1px solid #000;
+    background-color: white;
+    height: 40px;
+    color: #000;
+}
+.btn:focus{
+    outline: none;
+}
+.btn-container{
+    display: flex;
+    justify-content: flex-end;
+}
+.link{
+    font-size:1.5rem;
+    font-weight: 500;
+    color: #000;
+    text-decoration: none;
+}
+
+@media screen and (max-width:860px){
+    .post{
+        padding: 5% 5%;
+     }
+}

@@ -1,0 +1,136 @@
+.bbs{
+    background-color: #F0F2F5;
+    min-height: 100vh;
+    padding: 5% 20%;
+}
+.links{
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+.link{
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: black;
+}
+.header{
+    font-weight: 500;
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+.warning{
+    font-weight: 500;
+    font-size: 1.5rem;
+}
+.topic-header{
+    font-weight: 500;
+    font-size: 2rem;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.btn{
+    font-size: 1.5rem;
+    font-weight: 500;
+    background-color: #373373;
+    color: white;
+    border: none;
+    height: 2.4rem;
+    border-radius: 4px;
+}
+.btn-link{
+    text-decoration: none;
+    color:white;
+}
+.btn-link:hover{
+    color:white;
+}
+.topic{
+    background-color: white;
+    /* height: 70px; */
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 1.5rem;
+}
+.topic-link{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    color:black;
+    text-decoration: none;
+}
+.link:hover{
+    color:black;
+}
+.text{
+    font-weight: 500;
+    display: flex;
+    height: 100%;
+    color: black;
+}
+.location{
+    height: 100%;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+}
+.location-name{
+    color: white;
+    border-radius: 4px;
+    font-size: 1.3rem;
+    font-weight: 500;
+    width: 80px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+}
+.title-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+.title{
+    font-weight: 600;
+    font-size: 1.5rem;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    word-wrap: break-word;
+}
+.topic:hover .title{
+    text-decoration: underline;
+}
+.date{
+    color: gray;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+.side{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: gray;
+    padding-left: 5px;
+}
+.number{
+    font-weight: 600;
+    color: black;
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+}
+.reply{
+    font-weight: 500;
+    font-size: 1.2rem;
+}
+
+@media screen and (max-width:750px) {
+    .bbs{
+        padding: 5%;
+    }
+    
+}

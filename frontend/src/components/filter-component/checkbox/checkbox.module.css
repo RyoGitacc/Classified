@@ -1,0 +1,49 @@
+
+.container{
+    height: auto;
+    border-bottom: 1px solid rgb(204, 203, 203);
+}
+.bar{
+    display: flex;
+    align-items:center;
+    justify-content: space-between;
+    font-size: 1.6rem;
+    font-weight:500;
+    color:gray;
+    box-sizing: border-box;
+    height: 40px;
+
+}
+.value{
+    color: #333;
+}
+.radio-box{
+    transition: .2s height linear;
+    overflow: hidden;
+}
+.radio{
+    display: flex;
+    align-items: center;
+    font-size: 1.6rem;
+    font-weight: 500;
+    height: 40px;
+    color: #333;
+}
+.box{
+    width: 15px;
+    height: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border: 1px solid #333;
+    border-radius: 0.375rem;
+    margin-right: 5px;
+}
+.check{
+    color: white;
+}
+
+.input{
+    display: none;
+}
