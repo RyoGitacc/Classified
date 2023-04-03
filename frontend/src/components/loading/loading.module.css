@@ -1,0 +1,45 @@
+.loading{
+    width: 100%;
+    height: calc((100vh - 80px) / 2);
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+.light {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    opacity: 0.3;
+  }
+  
+  .light:nth-child(1){
+    background-color: gray;
+    animation: blink 2s ease-in-out infinite;
+  }
+  
+  .light:nth-child(2){
+    background-color: gray;
+    animation: blink 2s ease-in-out infinite;
+    animation-delay: .66s;
+  }
+  
+  .light:nth-child(3) {
+    background-color: gray;
+    animation: blink 2s ease-in-out infinite;
+    animation-delay: 1.333s;
+  }
+  
+  @keyframes blink {
+    0% {
+      opacity: 0.3;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.3;
+    }
+  }
+  
+  

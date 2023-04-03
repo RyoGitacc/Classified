@@ -30,7 +30,7 @@ export default function Signup() {
        }
        
        try{
-           await axios.post("https://sharecanada2022.herokuapp.com/auth/signup",userData)
+           await axios.post("/auth/signup",userData)
            target.username.value=""
            target.email.value="";
            target.password.value="";

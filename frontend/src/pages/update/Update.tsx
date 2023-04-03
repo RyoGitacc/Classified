@@ -25,7 +25,7 @@ export default function Update() {
   useEffect(()=>{
     const getItem=async():Promise<void>=>{
         try{
-            const res = await axios.get<ItemType>(`https://sharecanada2022.herokuapp.com/get/item/${id}`);
+            const res = await axios.get<ItemType>(`/get/item/${id}`);
             setItem(res.data)
         }catch(err){
             console.log(err)
@@ -100,7 +100,7 @@ export default function Update() {
      console.log(updateData)
 
      try{
-        await axios.put(`https://sharecanada2022.herokuapp.com/update/${id}`,updateData)
+        await axios.put(`/update/${id}`,updateData)
         navigate(`/search/${category}`)
      }catch(err){
         console.log(err)

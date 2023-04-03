@@ -5,7 +5,7 @@ import { useAppDispatch } from '../../redux/hooks';
 import { loginFailure, loginStart, loginSuccess} from '../../redux/userSlice';
 import styles from './signin.module.css'
 import {Email,Lock} from '@mui/icons-material';
-import { useFavorites } from '../../context/FavoriteContext';
+import { getFavorites } from '../../redux/favoriteSlice';
 
 type LoginDataType={
   email:{value:string};
@@ -16,24 +16,22 @@ export default function Signin() {
   const [nortification,setNortification]=useState<string>("")
   const dispatch=useAppDispatch();
   const navigate = useNavigate();
-  const {getFavorites}=useFavorites()
 
   const handleSubmit=async(e:FormEvent)=>{
     e.preventDefault();
     setNortification("")
     const target=e.target as typeof e.target & LoginDataType
+
     const userData={
       email:target.email.value,
       password:target.password.value
     }
-     //https://sharecanada2022.herokuapp.com
+    
     dispatch(loginStart());
     try{
-      const res=await axios.post("http://localhost:8800/auth/signin",userData)
-      console.log(res.data)
+      const res=await axios.post("/auth/signin",userData)
       document.cookie="access_token=" + res.data.access_token;
       dispatch(loginSuccess(res.data.user))
-      getFavorites(res.data.user.id)
       navigate('/')
       
     }catch(err:any){

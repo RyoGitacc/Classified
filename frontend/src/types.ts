@@ -61,27 +61,9 @@ type Optional=Partial<{
     required:boolean;
 }
 
-  export type ConditionType={
-    location:string
-    roomType:string;
-    jobType:string;
-    productType:string;
-    cautionType:string;
-    min:number;
-    max:number;
-    guest:boolean;
-    laundry:boolean;
-    furnished:boolean;
-  }
+ 
 
-  export type BbsTopicType={
-             id:string
-             title:string
-             location:string
-             comments:number;
-             username:string;
-             lastUpdated?:string;
-  }
+
 
   export type UpdateDataType={
     title:string;

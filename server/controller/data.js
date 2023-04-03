@@ -2,8 +2,7 @@ import mysql from 'mysql'
 import db from '../db.js'
 
 export const addItem=(req,res)=>{
-   console.log(req.body)
-   console.log(req.body.roomType)
+ 
    const {id,category,title,location,area,photo,description,username,email,password,
          price,roomType,jobType,productType,cautionType,guest,laundry,furnished,lastUpdated,views}=req.body;
    const q="INSERT INTO items(`id`,`category`,`title`,`location`,`area`,`photo`,`description`," + 
@@ -65,7 +64,7 @@ export const getRecentItems=(req,res)=>{
   }
 export const deleteDataById=(req,res)=>{
   const id=req.params.id
-  console.log(id)
+  
   const q=`DELETE FROM items WHERE id='${id}';DELETE FROM favorites WHERE itemId = '${id}'`   
   db.query(q,(err,data)=>{
     if(err){

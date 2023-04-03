@@ -1,19 +1,45 @@
 .sidebar{
-    height: 700px;
+    height: auto;
+    box-shadow: 1px 1px 2px 2px rgba(0,0,0,0.1);
+    -webkit-box-shadow: 1px 1px 2px 2px rgba(0,0,0,0.1);
+    -moz-box-shadow: 1px 1px 2px 2px rgba(0,0,0,0.1);
 }
 .header{
     height: 50px;
     display: flex;
     align-items: center;
-    padding-left: 5%;
+    justify-content: space-between;
+    padding: 0 5%;
     font-size: 1.6rem;
-    font-weight: 500;
-    color: #333;
+    font-weight: 700;
+    color:black;
+    background-color: white;
+}
+.tuneIcon{
+    font-size: 2rem !important;
 }
 .wrapper{
-    padding-left: 5%;
+    padding: 0 5%;
     height: auto;
     border-top: 1px solid rgb(204, 203, 203);
     border-bottom: 1px solid rgb(204, 203, 203);
     background-color: white;
+}
+
+@media screen and (max-width:850px) {
+    .sidebar{
+        height: auto;
+        box-shadow: unset;
+    }
+    .header{
+      display: none;
+    }
+    .tuneIcon{
+        display: none !important;
+    }
+    .wrapper{
+        padding: 0px;
+    }
+   
+    
 }

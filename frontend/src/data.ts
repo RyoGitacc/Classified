@@ -24,7 +24,7 @@ export const dummy={
     lastUpdated:""
 }
 
-export const conditionDummy={
+export const initialCondition={
     category:"Any",
     page:"1",
     location:"Any",
@@ -40,13 +40,13 @@ export const conditionDummy={
 }
 
 
-export const CITIES:string[]=["Any","Toronto","Vancouver","Montreal","Calgary","Banff","Victoria"]
-export const ROOMTYPES:string[]=["Any","Ground/Upstairs","Basement","Condo","Others"];
+export const CITIES:string[]=["","Toronto","Vancouver","Montreal","Calgary","Banff","Victoria"]
+export const ROOMTYPES:string[]=["","Ground/Upstairs","Basement","Condo","Others"];
 export const ADDITIONALS:PassingDataType[]=[{name:"Guest Friendly",value:"guest"},{name:"Laundry On Site",value:"laundry"},
                                             {name:"Furnished",value:"furnished"}]
-export const JOBTYPES:string[]=["Any","Restaurant","Office","Construction","Retail","Others"];
-export const PRODUCTTYPES:string[]=["Any","Appliance","Fashion","Sports","Food","Others"]
-export const CAUTIONTYPES:string[]=["Any","Job","House","Others"]
+export const JOBTYPES:string[]=["","Restaurant","Office","Construction","Retail","Others"];
+export const PRODUCTTYPES:string[]=["","Appliance","Fashion","Sports","Food","Others"]
+export const CAUTIONTYPES:string[]=["","Job","House","Others"]
 
 export const LOCATIONS:PassingDataType[]=[{name:"Toronto",value:"Toronto"},{name:"Vancouver",value:"Vancouver"},
                                    {name:"Montreal",value:"Montreal"},{name:"Calgary",value:"Calgary"},

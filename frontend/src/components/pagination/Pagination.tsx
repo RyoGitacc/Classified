@@ -5,7 +5,7 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import styles from './pagination.module.css'
 type PaginationPropsType={
   length:number | undefined;
-  keyword?:string 
+  keyword?:string | null
 }
 
 export default function Pagination({length,keyword}:PaginationPropsType) {
@@ -54,23 +54,23 @@ else{
 }
 
 const changePage=(pageNumber:number)=>{
-  if(keyword) navigate(`/search/result?keyword=${keyword}&page=${pageNumber}`)
+  if(keyword) navigate(`/result?keyword=${keyword}&page=${pageNumber}`)
   else navigate(`/search/${category}?page=${pageNumber}`)
 }
 const sendPreviousPage=()=>{
   if(pageNumber > 1){
-    if(keyword) navigate(`/search/result?keyword=${keyword}&page=${pageNumber-1}`)
+    if(keyword) navigate(`/result?keyword=${keyword}&page=${pageNumber-1}`)
     else navigate(`/search/${category}?page=${pageNumber - 1}`)
   }
 }
 const sendNextPage=()=>{
    if(pageNumber < numOfPage){
-    if(keyword) navigate(`/search/result?keyword=${keyword}&page=${pageNumber+1}`)
+    if(keyword) navigate(`/result?keyword=${keyword}&page=${pageNumber+1}`)
     else  navigate(`/search/${category}?page=${pageNumber + 1}`)
    } 
 }
 
-if(length && length > 0){
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
@@ -91,8 +91,5 @@ if(length && length > 0){
       </div>
     </div>
   )
-}
-else{
-  return null;
-}
+
 }

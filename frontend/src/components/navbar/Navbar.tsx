@@ -1,10 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import styles from './navbar.module.css'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { logout } from '../../redux/userSlice';
-import {SearchOutlined,FavoriteBorder} from '@mui/icons-material';
-import { useFavorites } from '../../context/FavoriteContext';
+import {FavoriteBorder} from '@mui/icons-material';
+import Searchbar from '../searchbar/Searchbar';
+import { useWindowSize } from '../../context/WindowSizeContext';
+import axios from 'axios';
+import { getFavorites } from '../../redux/favoriteSlice';
+
 
 
 
@@ -16,25 +20,29 @@ import { useFavorites } from '../../context/FavoriteContext';
 export default function Navbar() {
   const dispatch=useAppDispatch()
   const {currentUser}=useAppSelector(state=>state.user)
-  const {clearFavoritesFromStorage}=useFavorites()
-  const navigate = useNavigate();
+  const {innerWidth}=useWindowSize();
   const [openLogout,setOpenLogout]=useState<boolean>(false)
+  const navigate = useNavigate();
+
+  useEffect(()=>{
+    const copyFavoriteFromDB=async()=>{
+      if(currentUser) {
+        const favoriteRes=await axios.get<string[]>(`/favorite/get/itemIds/${currentUser.id}`)
+        dispatch(getFavorites({ids:favoriteRes.data}))
+      }
+    }
+    if(currentUser) 
+         copyFavoriteFromDB()
+  },[currentUser,dispatch])
 
   const handleLogout=(e:React.MouseEvent<HTMLSpanElement>)=>{
     e.stopPropagation();
+    setOpenLogout(false)
     dispatch(logout());
-    clearFavoritesFromStorage()
     document.cookie="access_token=;expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/"
   }
   
-  const searchByKeyword=async(e:React.FormEvent):Promise<void>=>{
-        e.preventDefault();
-        const target=e.target as typeof e.target & {keyword:{value:string}}
-        console.log(target.keyword.value)
-        const keyword:string=target.keyword.value
-        navigate(`/search/result?keyword=${keyword}&page=1`)
-
-  }
+ 
   
  
 
@@ -47,35 +55,42 @@ export default function Navbar() {
         <span className={styles.sub}>Local classified website</span>
        </Link>
       </div>
-      <form className={styles.search} onSubmit={(e)=>searchByKeyword(e)}>
-        <SearchOutlined style={{fontSize:"2rem",margin:"0 5px"}}/>
-        <input type="text" name="keyword" className={styles.input} placeholder="Search by keyword"/>
-        <button type="submit" className={styles["submit-btn"]}></button>
-      </form>
+{ innerWidth >= 750  &&   
+      <div className={styles.search}>
+        <Searchbar/>
+      </div>
+}
       <ul className={styles.list}>
-       <li className={`${styles["list-item"]} ${styles["deleted-list"]}`}><Link to="/favorite" className={styles.link}>Favourite</Link></li>
-       <li className={`${styles["list-item"]} ${styles["deleted-list"]}`}><Link to="/bbs" className={styles.link}>BBS</Link></li>
-       <li className={styles["list-item"]} onClick={()=>currentUser ? setOpenLogout(!openLogout) : navigate('/signin')}>
+{  innerWidth >= 750 &&  
+      <li className={styles["list-item"]}>
+         <Link to="/favorite" className={styles.link}>Favourite</Link>
+      </li>
+}
+       <li className={styles["signin-link"]} onClick={()=>currentUser ? setOpenLogout(!openLogout) : navigate('/signin')}>
           {currentUser ? currentUser.username : "Sign in"}
-          <span className={openLogout && currentUser? styles["logout-popup"]: styles["logout-close"]} 
-                onClick={e=>handleLogout(e)}>
+         { openLogout &&
+           <span className={styles['logout-popup']} onClick={e=>handleLogout(e)}>
             Logout
           </span>
+         }
        </li>
-       <li className={styles["list-item"]}><Link to="/post" className={styles.link}>Post</Link></li>
+       <li className={styles["list-item"]}>
+         <Link to="/post" className={styles["post-link"]}>Post</Link>
+       </li>
       </ul>
      </div>
-     <div className={styles["wrapper-mobile"]}>
-       <form className={styles["search-mobile"]} onSubmit={(e)=>searchByKeyword(e)}>
-        <SearchOutlined style={{fontSize:"3rem",margin:"0 10px",color:"#3e4153"}}/>
-        <input type="text" name="keyword" className={styles["input-mobile"]} placeholder="Keyword..."/>
-        <button type="submit" className={styles["submit-btn"]}></button>
-      </form>
-      <Link to="/favorite" className={styles["link-mobile"]}>
-        <FavoriteBorder style={{fontSize:"3rem",margin:"0 10px"}}/>
-      </Link>
-      <Link to={'/bbs'} className={styles.bbs}>BBS</Link>
+  {innerWidth < 750 &&
+      <div className={styles.bottom}>
+       <div className={styles["search-mobile"]}>
+         <Searchbar/>
+       </div>
+       <div className={styles["favorite-mobile"]}>
+         <Link to="/favorite" className={styles["favarite-link-mobile"]}>
+           <FavoriteBorder className={styles["fav-icon"]}/>
+         </Link>
+       </div>
      </div>
+  }
     </div>
  
   )

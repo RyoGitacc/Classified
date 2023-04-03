@@ -6,10 +6,10 @@ import axios from 'axios'
 import {FavoriteBorderOutlined,Favorite,Visibility} from '@mui/icons-material/';
 import { ItemType } from '../../types'
 import { dummy } from '../../data'
-import { useAppSelector } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { FavouriteType } from '../../types';
-import { useFavorites } from '../../context/FavoriteContext';
 import { v4 as uuidv4 } from 'uuid';
+import { addFavorite, removeFavorite } from '../../redux/favoriteSlice';
 
 
 type EmailDataType={
@@ -23,20 +23,22 @@ export default function Contents() {
   const id:string=useParams().id || ""
   const [item,setItem]=useState<ItemType>(dummy)
   const {currentUser}=useAppSelector(state=>state.user)
-  const {favorites,addFavorite,deleteFavorite}=useFavorites()
+  const {favorites}=useAppSelector(state=>state.favorites)
   const [isFav,setIsFav]=useState<boolean>(favorites.includes(id))
   const [error,setError]=useState<string>("")
   const [password,setPassword]=useState<string>("")
   const [isMatched,setIsMatched]=useState<string>("")
   const navigate = useNavigate()
- 
+  const dispatch = useAppDispatch();
   
-
+  useEffect(()=>{
+    window.scrollTo({top:0,behavior:"smooth"})
+  },[])
 
   useEffect(()=>{
      const getItem=async()=>{
       try{
-        const res = await axios.get<ItemType>(`https://sharecanada2022.herokuapp.com/get/item/${id}`)
+        const res = await axios.get<ItemType>(`/get/item/${id}`)
         console.log(res.data);
         setItem(res.data)
 
@@ -60,8 +62,8 @@ export default function Contents() {
       userId:currentUser.id,
     }
     try{
-      await axios.post("https://sharecanada2022.herokuapp.com/favorite/add",data);
-      addFavorite(item.id)
+      await axios.post("/favorite/add",data);
+      dispatch(addFavorite({itemId:item.id}))
     }catch(err){
       console.log(err)
     }
@@ -73,8 +75,8 @@ export default function Contents() {
     if(currentUser){
       setIsFav(false)
       try{
-        await axios.delete(`https://sharecanada2022.herokuapp.com/favorite/remove/${currentUser.id}/${item.id}`)
-        deleteFavorite(item.id)
+        await axios.delete(`/favorite/remove/${currentUser.id}/${item.id}`)
+        dispatch(removeFavorite({itemId:item.id}))
       }catch(err){
         console.log(err);
       }
@@ -133,7 +135,7 @@ export default function Contents() {
             }
             
             try{
-                await axios.delete(`https://sharecanada2022.herokuapp.com/delete/${item.id}`)
+                await axios.delete(`/delete/${item.id}`)
                 navigate(`/search/${item.category}?page=1`)
                 setIsMatched("")
               }catch(err){

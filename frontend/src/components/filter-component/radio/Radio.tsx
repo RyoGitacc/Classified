@@ -1,42 +1,45 @@
 import React, {useState} from 'react'
-import { useLocalStorage } from '../../../hooks/useLocalStorage';
 import styles from './radio.module.css'
 import {KeyboardArrowDown,KeyboardArrowUp,Check} from '@mui/icons-material';
-import { useData } from '../../../context/DataContext';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useAppSelector,useAppDispatch } from '../../../redux/hooks';
+import { setFilterOption} from '../../../redux/filterOptionSlice';
 
 type RadioProps={
    title:string
    name:string
+   type:string
    data:string[]
 }
 
 
 
-export default function Radio({title,name,data}:RadioProps) {
-  const category:string = useParams().category || "Any";
-  const [searchParams]=useSearchParams();
-  const page:string=searchParams.get('page') || "1";
-  const [isOpen,setIsOpen]=useState<boolean>(false)
-  
-  const [checkedValue,setCheckedValue]=useLocalStorage(name,"Any")
-  const {setConditionFromRadio}=useData();
+export default function Radio({title,name,type,data}:RadioProps) {
+  const [isOpen,setIsOpen]=useState<boolean>(type === 'large' ? true :false)
+  const {filterOption}=useAppSelector(state=>state.filterOption)
+  const [checkedValue,setCheckedValue]=useState<string>(()=>{
+    if(filterOption[name] && filterOption !== null) 
+        return  filterOption[name] as string
+    else return "";
 
+  })
+  const dispatch=useAppDispatch()
+  
+  
   const handleChange=(e:React.ChangeEvent<HTMLInputElement>):void=>{
-       console.log(e.target.value)
        setCheckedValue(e.target.value)
-       setConditionFromRadio(category,page,name,e.target.value)
+       dispatch(setFilterOption({[name]:e.target.value}))
   }
 
-
   return (
-    <div className={styles.container}>
-      <div className={styles.bar} onClick={()=>setIsOpen(!isOpen)}>
+  <div className={styles.container}>
+    <div className={styles.bar} onClick={()=>type !== 'large' ? setIsOpen(!isOpen) : undefined}>
         <span>{title}</span>
         <span>
           <span className={styles.value}>{checkedValue}</span> 
-          { isOpen ? <KeyboardArrowUp style={{fontSize:"2.5rem"}}/>
-                   :<KeyboardArrowDown style={{fontSize:"2.5rem"}}/>}
+          { isOpen ? 
+                   <KeyboardArrowUp className={styles.arrow} />
+                   :<KeyboardArrowDown className={styles.arrow} />
+          }
         </span>
       </div>
       <div className={styles["radio-box"]} style={{height: isOpen ? `${data.length * 40}px` : "0px"}}>
@@ -48,10 +51,10 @@ export default function Radio({title,name,data}:RadioProps) {
            </label>
            <input type="radio" id={c + name} value={c} name={name} 
                   checked={checkedValue === c} className={styles.input} onChange={e=>handleChange(e)}/>
-           <label htmlFor={c + name}>{c}</label>
+           <label htmlFor={c + name}>{ c? c : "Any"}</label>
          </div>
       )}
       </div>
-      </div>
+    </div>
   )
 }

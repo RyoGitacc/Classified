@@ -110,7 +110,7 @@ const handleSubmit=async(e:React.SyntheticEvent)=>{
   console.log(itemData)
 
   try{
-      await axios.post("https://sharecanada2022.herokuapp.com/add",itemData)
+      await axios.post("/add",itemData)
       navigate(`../search/${category}?page=1`)
      }catch(err){
       console.log(err)

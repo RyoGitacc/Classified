@@ -1,6 +1,5 @@
 
 .container{
-    height: auto;
     border-bottom: 1px solid rgb(204, 203, 203);
 }
 .bar{
@@ -14,8 +13,13 @@
     height: 40px;
 
 }
+.arrow{
+    font-size: 2.5rem !important;
+    display: none !important;
+}
 .value{
     color: #333;
+    display: none;
 }
 .radio-box{
     transition: .2s height linear;
@@ -46,4 +50,19 @@
 
 .input{
     display: none;
+}
+
+@media screen and (max-width:850px){
+    .bar{
+        padding: 0 10px;
+    }
+    .radio-box{
+        padding: 0 10px;
+    }
+    .arrow{
+        display: inline !important;
+    }
+    .value{
+        display: inline;
+    }
 }

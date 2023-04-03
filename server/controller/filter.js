@@ -8,7 +8,7 @@ export const filterAny=(req,res)=>{
     const location = req.body.location;
     let q="";
     let q2="";
-    if(location !== "Any"){
+    if(location){
       q="SELECT * FROM items WHERE location = '" + location + "' ORDER BY lastUpdated DESC limit 6 offset " + offset;
       q2="SELECT COUNT(id) AS count FROM items WHERE location = '" + location + "'";
     }
@@ -31,20 +31,24 @@ export const filterAny=(req,res)=>{
 }
 
 export const filterRooms=(req,res)=>{
-    console.log("rooms")
+    console.log(req.body)
     const page = req.query.page;
     const offset=(page - 1) * 6;
-    const {location,roomType,min,max,guest,laundry,furnished}=req.body;
+    const {location,roomType,guest,laundry,furnished,sort,order}=req.body;
+    let {min,max}=req.body;
 
+    if(!min) min=0;
+    if(!max) max=5000;
+    
     let q="SELECT * FROM items WHERE category = 'rooms' and price between " + min + " and " + max;
     let q2="SELECT COUNT(id) AS count FROM items WHERE category = 'rooms' and price between " + min + " and " + max;
 
-    if(location !== "Any"){
+    if(location){
         q = q + " and location = '" + location + "'"
         q2 = q2 + " and location = '" + location + "'"
     }
 
-    if(roomType !=="Any"){
+    if(roomType){
         q= q + " and roomType = '" + roomType + "'"
         q2= q2 + " and roomType = '" + roomType + "'"
     }
@@ -63,9 +67,14 @@ export const filterRooms=(req,res)=>{
         q =q + " and furnished = 1"
         q2=q2 + " and furnished = 1"
     }
-    q=q + " ORDER BY lastUpdated DESC LIMIT 6 OFFSET " + offset;
-    const query = q + ";" + q2;
 
+    if(sort){
+       q=q + " ORDER BY " + sort + " " + order + " LIMIT 6 OFFSET " + offset;
+    }else{
+        q=q + " ORDER BY lastUpdated DESC LIMIT 6 OFFSET " + offset;
+    }
+    const query = q + ";" + q2;
+    
     db.query(query,(err,data)=>{
         if(err){
             console.log(err);
@@ -80,22 +89,26 @@ export const filterRooms=(req,res)=>{
 export const filterJobs=(req,res)=>{
     const page = req.query.page;
     const offset=(page - 1) * 6;
-    const {location,jobType}=req.body;
+    const {location,jobType,sort,order}=req.body;
 
     let q="SELECT * FROM items WHERE category = 'jobs'";
     let q2="SELECT COUNT(id) AS count FROM items WHERE category = 'jobs'";
 
-    if(location !== "Any"){
+    if(location){
         q = q + " and location = '" + location + "'"
         q2 = q2 + " and location = '" + location + "'"
     }
 
-    if(jobType !== "Any"){
+    if(jobType){
         q=q + " and jobType = '" + jobType + "'"
         q2=q2+ " and jobType = '" + jobType + "'"
     }
 
-    q=q + " ORDER BY lastUpdated DESC LIMIT 6 OFFSET " + offset;
+    if(sort){
+        q=q + " ORDER BY " + sort + " " + order + " LIMIT 6 OFFSET " + offset;
+     }else{
+         q=q + " ORDER BY lastUpdated DESC LIMIT 6 OFFSET " + offset;
+     }
     const query = q + ";" + q2;
 
     db.query(query,(err,data)=>{
@@ -112,22 +125,30 @@ export const filterJobs=(req,res)=>{
 export const filterMarket=(req,res)=>{
     const page = req.query.page;
     const offset=(page - 1) * 6;
-    const {location,productType,min,max}=req.body;
+    const {location,productType,sort,order}=req.body;
+    let {min,max}=req.body;
+
+    if(!min) min=0;
+    if(!max) max=5000;
 
     let q="SELECT * FROM items WHERE category = 'market' and price between " + min + " and " + max;
     let q2="SELECT COUNT(id) AS count FROM items WHERE category = 'market' and price between " + min + " and " + max;
 
-    if(location !== "Any"){
+    if(location){
         q = q + " and location = '" + location + "'"
         q2 = q2 + " and location = '" + location + "'"
     }
 
-    if(productType !== "Any"){
+    if(productType){
         q=q + " and productType = '" + productType + "'"
         q2=q2+ " and productType = '" + productType + "'"
     }
 
-    q=q + " ORDER BY lastUpdated DESC LIMIT 6 OFFSET " + offset;
+    if(sort){
+        q=q + " ORDER BY " + sort + " " + order + " LIMIT 6 OFFSET " + offset;
+     }else{
+         q=q + " ORDER BY lastUpdated DESC LIMIT 6 OFFSET " + offset;
+     }
     const query = q + ";" + q2;
 
     db.query(query,(err,data)=>{
@@ -145,17 +166,21 @@ export const filterMarket=(req,res)=>{
 export const filterEvents=(req,res)=>{
     const page = req.query.page;
     const offset=(page - 1) * 6;
-    const {location}=req.body;
+    const {location,sort,order}=req.body;
 
     let q="SELECT * FROM items WHERE category = 'events'";
     let q2="SELECT COUNT(id) AS count FROM items WHERE category = 'events'";
 
-    if(location !== "Any"){
+    if(location){
         q = q + " and location = '" + location + "'"
         q2 = q2 + " and location = '" + location + "'"
     }
 
-    q=q + " ORDER BY lastUpdated DESC LIMIT 6 OFFSET " + offset;
+    if(sort){
+        q=q + " ORDER BY " + sort + " " + order + " LIMIT 6 OFFSET " + offset;
+     }else{
+         q=q + " ORDER BY lastUpdated DESC LIMIT 6 OFFSET " + offset;
+     }
     const query = q + ";" + q2;
 
     db.query(query,(err,data)=>{
@@ -172,22 +197,26 @@ export const filterEvents=(req,res)=>{
 export const filterCautions=(req,res)=>{
     const page = req.query.page;
     const offset=(page - 1) * 6;
-    const {location,cautionType}=req.body;
+    const {location,cautionType,sort,order}=req.body;
 
     let q="SELECT * FROM items WHERE category = 'cautions'";
     let q2="SELECT COUNT(id) AS count FROM items WHERE category = 'cautions'";
 
-    if(location !== "Any"){
+    if(location){
         q = q + " and location = '" + location + "'"
         q2 = q2 + " and location = '" + location + "'"
     }
 
-    if(cautionType !== "Any"){
+    if(cautionType){
         q=q + " and cautionType = '" + cautionType + "'"
         q2=q2+ " and cautionType = '" + cautionType + "'"
     }
-
-    q=q + " ORDER BY lastUpdated DESC LIMIT 6 OFFSET " + offset;
+    
+    if(sort){
+        q=q + " ORDER BY " + sort + " " + order + " LIMIT 6 OFFSET " + offset;
+     }else{
+         q=q + " ORDER BY lastUpdated DESC LIMIT 6 OFFSET " + offset;
+     }
     const query = q + ";" + q2;
 
     db.query(query,(err,data)=>{
@@ -204,17 +233,21 @@ export const filterCautions=(req,res)=>{
 export const filterOthers=(req,res)=>{
     const page = req.query.page;
     const offset=(page - 1) * 6;
-    const {location}=req.body;
+    const {location,sort,order}=req.body;
 
     let q="SELECT * FROM items WHERE category = 'others'";
     let q2="SELECT COUNT(id) AS count FROM items WHERE category = 'others'";
 
-    if(location !== "Any"){
+    if(location){
         q = q + " and location = '" + location + "'"
         q2 = q2 + " and location = '" + location + "'"
     }
-
-    q=q + " ORDER BY lastUpdated DESC LIMIT 6 OFFSET " + offset;
+    
+    if(sort){
+        q=q + " ORDER BY " + sort + " " + order + " LIMIT 6 OFFSET " + offset;
+     }else{
+         q=q + " ORDER BY lastUpdated DESC LIMIT 6 OFFSET " + offset;
+     }
     const query = q + ";" + q2;
 
     db.query(query,(err,data)=>{
@@ -230,7 +263,6 @@ export const filterOthers=(req,res)=>{
 
 export const searchByKeyword=(req,res)=>{
     
-    console.log(req.params.keyword,req.query.page)
     const keyword=req.params.keyword;
     const page=req.query.page;
     const offset = (page - 1) * 6
@@ -244,7 +276,6 @@ export const searchByKeyword=(req,res)=>{
 
 
     const query=q + q2;
-    console.log(query)
     db.query(query,(err,data)=>{
         if(err){
             console.log(err)

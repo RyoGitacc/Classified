@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../redux/hooks';
 import { FavouriteType } from '../../types';
 import axios from 'axios';
-import { useFavorites } from '../../context/FavoriteContext';
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -17,7 +16,7 @@ type ItemProps={
 
 export default function FeaturedItem({item}:ItemProps) {
   const {currentUser}=useAppSelector(state=>state.user)
-  const {favorites,addFavorite,deleteFavorite}=useFavorites()
+  const {favorites}=useAppSelector(state=>state.favorites)
   const [isFav,setIsFav]=useState<boolean>(favorites.includes(item.id))
 
 
@@ -34,8 +33,8 @@ export default function FeaturedItem({item}:ItemProps) {
       userId:currentUser.id,
     }
     try{
-      await axios.post("https://sharecanada2022.herokuapp.com/favorite/add",data);
-      addFavorite(item.id)
+      await axios.post("/favorite/add",data);
+      // addFavorite(item.id)
     }catch(err){
       console.log(err)
     }
@@ -49,8 +48,8 @@ export default function FeaturedItem({item}:ItemProps) {
     setIsFav(false)
     if(currentUser){
       try{
-        await axios.delete(`https://sharecanada2022.herokuapp.com/favorite/remove/${currentUser.id}/${item.id}`)
-        deleteFavorite(item.id)
+        await axios.delete(`/favorite/remove/${currentUser.id}/${item.id}`)
+        // deleteFavorite(item.id)
       }catch(err){
         console.log(err);
       }
@@ -72,7 +71,7 @@ export default function FeaturedItem({item}:ItemProps) {
 
   const incrementViews=async():Promise<void>=>{
       try{
-         await axios.put(`https://sharecanada2022.herokuapp.com/increment/views/${item.id}`)
+         await axios.put(`/increment/views/${item.id}`)
          setUserHistory()
       }catch(err){
          console.log(err)

@@ -18,16 +18,19 @@
    height: 100%;
    display: flex;
    align-items: center;
-   justify-content: space-between;
 }
 .logo{
    height: 100%;
    display: flex;
    align-items: center;
-   justify-content: center;
    font-size: 3rem;
    color: #373373;
    font-weight: 700;
+   font-family: 'Montserrat', sans-serif;
+   width: 25%;
+}
+.search{
+   width: 45%;
 }
 .home-link{
    display: flex;
@@ -46,60 +49,51 @@
    font-weight: 700;
    line-height: 1;
 }
-.search{
-display: flex;
-width:40%;
-height: 48px;
-box-sizing: border-box;
-display: flex;
-align-items: center;
-border: 1px solid #d2d3d7;
-border-radius: 0.375rem;
-overflow: hidden;
-}
-.input{
-  width: calc(100% - 2rem - 10px);
-  border: none;
-  height: 100%;
-}
-.input:focus{
-   outline: none;
 
-}
-.submit-btn{
-   display: none;
-}
 .list{
    list-style: none;
    display: flex;
+   justify-content: flex-end;
+   gap:15px;
+   width:30%;
    height: 100%;
    margin: 0;
    padding: 0;
    box-sizing: border-box;
 }
-.list-item{
+.list-item,.signin-link{
    display: flex;
    align-items: center;
    justify-content: center;
    font-size: 1.5rem;
-   margin-right: 20px;
-   font-weight: 500;
+   font-weight: 400;
    color: black;
    cursor: pointer;
    user-select: none;
 }
-.list .list-item:nth-child(3){
+.signin-link{
    position: relative;
 }
-.list .list-item:nth-child(4){
-   margin-right: 0;
+.post-link{
+   color:white;
+   background-color: #373373;
+   font-weight: 400;
+   text-decoration: none;
+   font-size: 1.5rem;
+   padding: 8px 15px 8px 15px;
+   border-radius: 4px;
 }
+.post-link:hover{
+   color: white;
+
+}
+
 
 .link{
    color: black;
    text-decoration: none;
    cursor: pointer;
-   font-weight: 500;
+   font-weight: 400;
 }
 .link:hover{
    color: black;
@@ -113,88 +107,52 @@ overflow: hidden;
    padding: 5px;
    position: absolute;
    bottom: -10px;
-   left:0;
-   opacity: 1;
-   visibility: visible;
-   transition: .5s opacity ease, .5s visibility ease;
-}
-.logout-close{
-   opacity: 0;
-   visibility: hidden;
-   font-size: 1.5rem;
-   font-weight: 500;
-   color: white;
-   background-color: gray;
-   border-radius: 4px;
-   padding: 5px;
-   position: absolute;
-   bottom: -10px;
-   left:0;
-   transition: .5s opacity ease, .5s visibility ease;
-}
-.wrapper-mobile{
-  display: none;
+   left:-100%;
 }
 
-@media screen and (max-width:820px) {
+
+@media screen and (max-width:749.9px) {
 
    .navbar{
       height: 140px;
    }
    .wrapper{
       height: 65px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
    }
-  .search{
-   display: none;
-  }
-  .wrapper-mobile{
-   height: 65px;
-   display: flex;
-   align-items: center;
-   justify-content: space-between;
-   box-sizing: border-box;
-  }
-.search-mobile{
-   display: flex;
-   width:calc(100% - 3rem - 20px - 80px);
-   height: 48px;
-   box-sizing: border-box;
-   display: flex;
-   align-items: center;
-   border: 1px solid #d2d3d7;
-   border-radius: 0.375rem;
-   overflow: hidden;
-}
-.input-mobile{
-   width: calc(100% - 3rem - 20px);
-   height: 100%;
-   border: none;
-   font-size: 1.5rem;
-   font-weight: 500;
-   padding: 0;
+   .bottom{
+      height: 55px;
+      display: flex;
+      align-items: center;
+   }
+   .logo{
+      width: 50%;
+   }
+   .list{
+      width: 50%;
+   }
+   .search-mobile{
+      width: calc(100% - 100px);
+   }
+   .favorite-mobile{
+      width: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+   }
 
+   .favorite-link-mobile{
+      text-decoration: none;
+   }
+   .fav-icon{
+      font-size: 30px !important;
+      color:#373373 !important;
+   }
 }
-.input-mobile:focus{
-   outline: none;
-}
-.link-mobile{
-   color:#373373;
-   text-decoration: none;
-   
-}
-.bbs{
-   font-weight: 500;
-   font-size: 1.5rem;
-   background-color: #373373;
-   color:white;
-   width: 80px;
-   height: 48px;
-   text-align: center;
-   line-height: 48px;
-   box-sizing: border-box;
-   text-decoration: none;
-}
-.deleted-list{
-   display: none;
-}
+
+@media screen and (max-width:500px){
+   .navbar{
+      padding: 5px 10px 5px 10px;
+   }   
 }

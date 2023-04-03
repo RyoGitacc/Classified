@@ -50,20 +50,25 @@ export const deleteFavouriteByUserAndItemId=(req,res)=>{
   export const getFavorite=(req,res)=>{
     const itemId=req.params.itemId;
     const userId=req.params.userId;
-    const q="SELECT * FROM items WHERE id = ?"
+    const q=`SELECT * FROM items WHERE id = '${itemId}'`
     const q2=`;SELECT lastUpdated FROM favorites WHERE itemId = '${itemId}' AND userId = '${userId}'`
     
     const query= q + q2;
+    // console.log(query)
 
     db.query(query,[itemId],(err,data)=>{
         if(err){
-            console.log(err);
+            console.log("error");
             res.status(403).json(err)
             return;
         }
+        console.log(data)
         
-        console.log(data[0][0])
-        res.status(200).json({item:data[0][0],lastUpdated:data[1][0].lastUpdated})
+        // console.log(data[0][0])
+        if(data[0].hasOwnProperty(0) && data[1].hasOwnProperty(0)) 
+              res.status(200).json({item:data[0][0],lastUpdated:data[1][0].lastUpdated})
+              else res.status(403).json("not found")
+
 
     })
   }
@@ -71,7 +76,6 @@ export const deleteFavouriteByUserAndItemId=(req,res)=>{
 
  export const getItemIds=(req,res)=>{
     const userId=req.params.userId;
-    console.log(userId)
     const q=`SELECT itemId FROM favorites WHERE userId = '${userId}'` 
 
     db.query(q,(err,data)=>{

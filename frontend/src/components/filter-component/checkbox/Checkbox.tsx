@@ -1,35 +1,51 @@
 import { Check, KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material';
 import React, { useState } from 'react'
-import { useParams, useSearchParams } from 'react-router-dom';
-import { useData } from '../../../context/DataContext';
+import { setFilterOption } from '../../../redux/filterOptionSlice';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { PassingDataType } from '../../../types';
 import styles from './checkbox.module.css'
 
 
 type CheckboxProps={
+   type:string
    data:PassingDataType[]
 
 }
-export default function Checkbox({data}:CheckboxProps) {
-  const category:string = useParams().category || "Any";
-  const [searchParams]=useSearchParams();
-  const page:string | null=searchParams.get('page') || "1";
+export default function Checkbox({type,data}:CheckboxProps) {
+  const {filterOption}=useAppSelector(state=>state.filterOption)
+  const dispatch = useAppDispatch()
 
 
-    const [checkedItem,setCheckedItem]=useState<boolean[]>(
-      new Array(data.length).fill(false)
+    const [checkedItem,setCheckedItem]=useState<boolean[]>(()=>{
+      if(typeof filterOption[data[0].value] === "boolean" &&
+         typeof filterOption[data[1].value] === "boolean" &&
+         typeof filterOption[data[2].value] === "boolean"){
+
+          return [filterOption[data[0].value],filterOption[data[1].value],filterOption[data[2].value]]
+      }
+      else{
+        return new Array(data.length).fill(false)
+      }
+
+    }
     )
-    const [isOpen,setIsOpen]=useState<boolean>(false)
-    const {setConditionFromCheckbox}=useData()
+
+    const [isOpen,setIsOpen]=useState<boolean>(type === "large" ? true : false)
+    
  
 
     const changeChecked=(position:number)=>{
         const updatedchekedState:boolean[] = checkedItem.map((state,index)=> index === position? !state : state);
         setCheckedItem(updatedchekedState);
-        setConditionFromCheckbox(category,page,updatedchekedState)
+        dispatch(setFilterOption(
+          {
+           [data[0].value]:updatedchekedState[0],
+           [data[1].value]:updatedchekedState[1],
+           [data[2].value]:updatedchekedState[2]
+          }
+        ))
        }
 
-   
   return (
     <div className={styles.container}>
        <div className={styles.bar} onClick={()=>setIsOpen(!isOpen)}>
@@ -38,8 +54,9 @@ export default function Checkbox({data}:CheckboxProps) {
         {data.map((d,index)=>(
           <span key={index} className={styles.value}>{checkedItem[index] ? d.value + ", " : ""}</span> 
         ))}
-          { isOpen ? <KeyboardArrowUp style={{fontSize:"2.5rem"}}/>
-                   :<KeyboardArrowDown style={{fontSize:"2.5rem"}}/>}
+          { isOpen ? <KeyboardArrowUp className={styles.arrow}/>
+                   :<KeyboardArrowDown className={styles.arrow}/>
+          }
         </span>
       </div>
       <div className={styles["radio-box"]} style={{height: isOpen ? `${data.length * 40}px` : "0px"}}>

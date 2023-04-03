@@ -6,7 +6,6 @@ import dataRoutes from './routes/data.js'
 import authRoutes from './routes/auth.js'
 import favouriteRoutes from './routes/favourite.js'
 import filterRoutes from './routes/filter.js'
-import bbsRoutes from "./routes/bbs.js"
 import path from 'path'
 import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
@@ -20,18 +19,17 @@ const app = express();
 dotenv.config();
 // app.set("trust proxy",1)
 app.use(express.json())
-// app.use(cors({
-//   origin:"https://classified-ryo-aoyama.netlify.app",
-//   credentials:true,
-// }))
-app.use(cors());
+app.use(cors({
+  origin:"https://classified-ryo-aoyama.netlify.app",
+  credentials:true,
+}))
+// app.use(cors());
 app.use(helmet({
   crossOriginResourcePolicy: false,  //enable to display images on frontend
 }))
 app.use(cookieParser())
 app.use("/",dataRoutes);
 app.use("/auth",authRoutes)
-app.use("/bbs",bbsRoutes)
 app.use("/filter",filterRoutes)
 app.use("/favorite",favouriteRoutes)
 // app.use(express.static(path.join(__dirname,'notebook','build')))

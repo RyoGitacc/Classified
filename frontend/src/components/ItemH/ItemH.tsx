@@ -2,19 +2,20 @@ import React, { useState } from 'react'
 import styles from './itemH.module.css'
 import { Link } from 'react-router-dom'
 import { ItemType } from '../../types'
-import { useAppSelector } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { FavouriteType } from '../../types';
 import axios from 'axios';
-import { useFavorites } from '../../context/FavoriteContext';
 import { Favorite, FavoriteBorderOutlined } from '@mui/icons-material';
 import { v4 as uuidv4 } from 'uuid';
+import { addFavorite, removeFavorite } from '../../redux/favoriteSlice';
 type ListingItemProps={
     item:ItemType
 }
 
 export default function ItemH({item}:ListingItemProps) {
     const {currentUser}=useAppSelector(state=>state.user)
-    const {favorites,addFavorite,deleteFavorite}=useFavorites()
+    const {favorites}=useAppSelector(state=>state.favorites)
+    const dispatch=useAppDispatch();
     const [isFav,setIsFav]=useState<boolean>(favorites.includes(item.id))
 
    
@@ -23,15 +24,17 @@ export default function ItemH({item}:ListingItemProps) {
         e.preventDefault();
         e.stopPropagation()
         setIsFav(true)
-      if(currentUser){
-        const data:FavouriteType={
-          id:uuidv4(),
-          itemId:item.id,
-          userId:currentUser.id,
-        }
+
+        if(currentUser){
+          const data:FavouriteType={
+             id:uuidv4(),
+             itemId:item.id,
+             userId:currentUser.id,
+          }
+
         try{
-          await axios.post("https://sharecanada2022.herokuapp.com/favorite/add",data);
-          addFavorite(item.id)
+          await axios.post("/favorite/add",data);
+          dispatch(addFavorite({itemId:item.id}))
         }catch(err){
           console.log(err)
         }
@@ -46,8 +49,8 @@ export default function ItemH({item}:ListingItemProps) {
         setIsFav(false)
         if(currentUser){
           try{
-            await axios.delete(`https://sharecanada2022.herokuapp.com/favorite/remove/${currentUser.id}/${item.id}`)
-            deleteFavorite(item.id)
+            await axios.delete(`/favorite/remove/${currentUser.id}/${item.id}`)
+            dispatch(removeFavorite({itemId:item.id}))
           }catch(err){
             console.log(err);
           }
@@ -69,7 +72,7 @@ export default function ItemH({item}:ListingItemProps) {
 
       const incrementViews=async():Promise<void>=>{
           try{
-             await axios.put(`https://sharecanada2022.herokuapp.com/increment/views/${item.id}`)
+             await axios.put(`/increment/views/${item.id}`)
              setUserHistory();
           }catch(err){
              console.log(err)
@@ -83,7 +86,7 @@ export default function ItemH({item}:ListingItemProps) {
           <div className={styles.text}>
             <div className={styles.top}>
               <div className={styles.title}>{item.title}</div>
-              <div className={styles.date}>Saved on {item.lastUpdated.toString().replace('T'," ").slice(0,19)}</div>
+              <div className={styles.date}>{item.lastUpdated.toString().replace('T'," ").slice(0,19)}</div>
             </div>
             <div className={styles.bottom}>
               <span className={styles.price}>{item.price ? "$" + item.price : ""}</span>

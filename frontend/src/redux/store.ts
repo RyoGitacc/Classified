@@ -1,5 +1,7 @@
 import { combineReducers, configureStore} from '@reduxjs/toolkit'
 import userReducer from './userSlice'
+import filterOpttionReducer from './filterOptionSlice'
+import favoriteReducer from './favoriteSlice'
 import storage from 'redux-persist/lib/storage'
 import { persistReducer } from 'redux-persist'
 import thunk from 'redux-thunk'
@@ -11,7 +13,9 @@ const persistConfig={
 }
 
 const reducers=combineReducers({
-    user:userReducer
+    user:userReducer,
+    filterOption:filterOpttionReducer,
+    favorites:favoriteReducer
 })
 
 const persistedReducer=persistReducer(persistConfig,reducers)
